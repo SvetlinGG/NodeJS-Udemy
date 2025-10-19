@@ -1,6 +1,7 @@
 
 const fs = require('fs');
 const http = require('http');
+const url = require('url');
 
 // FILES
 
@@ -33,13 +34,25 @@ const http = require('http');
 // SERVER
 
 const server = http.createServer((req, res) => {
-    res.end(`<h1>Hello from the Server!</h1>`)
+
+    const pathName = req.url;
+    if ( pathName === '/' || pathName === '/overview'){
+    res.end('This is overview!');
+    } else if ( pathName === '/product'){
+        res.end('This is product.')
+    } else {
+        res.writeHead(404);
+        res.end('Page not found');
+    }
+    
 });
+
+
 
 server.listen(8000, '127.0.0.1', () => {
     console.log('Listening to requests on port 8000');
-    
-})
+});
+
 
 
 
