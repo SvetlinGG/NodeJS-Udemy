@@ -3,6 +3,7 @@ const fs = require('fs');
 const http = require('http');
 const url = require('url');
 
+
 // FILES
 
 // Blocking, synchronous way
@@ -40,6 +41,16 @@ const server = http.createServer((req, res) => {
     res.end('This is overview!');
     } else if ( pathName === '/product'){
         res.end('This is product.')
+    } else if ( pathName === '/api'){
+        fs.readFile(`${__dirname}/dev-data/data.json`, 'utf-8', (err, data) => {
+            const productData = JSON.parse(data);
+            console.log(productData);
+            
+        });
+
+
+
+        res.end('API');
     } else {
         res.writeHead(404, {
             'Content-type': 'text/html'
