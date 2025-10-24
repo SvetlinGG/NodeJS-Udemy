@@ -47,6 +47,8 @@ const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html`, 'u
 
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const dataObj = JSON.parse(data);
+console.log(slugify('Fresh Avocado', { lower: true}));
+
 
     
 
