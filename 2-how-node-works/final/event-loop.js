@@ -8,7 +8,8 @@ fs.readFile('test-file.txt', () => {
 
   setTimeout(() => console.log('Timer 2 finished'), 0);
   setTimeout(() => console.log('Timer 3 finished'), 3000);
-  setImmediate(() => console.log('Immediate 2 finished'))
+  setImmediate(() => console.log('Immediate 2 finished'));
+  //setInterval( () => console.log('Delay'), 3000 )
   
 });
 
