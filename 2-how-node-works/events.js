@@ -31,7 +31,7 @@ const server = http.createServer();
 
 server.on('request', (req, res) => {
   console.log('Request received!');
-  res.end('Request received!');
+  res.end();
 });
 
 server.on('request', (req, res) => {

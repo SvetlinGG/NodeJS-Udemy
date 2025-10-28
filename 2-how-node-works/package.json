@@ -1,9 +1,9 @@
 {
   "name": "2-how-node-works",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "events.js",
   "scripts": {
-    "start": "node event-loop.js"
+    "start": "node final/events.js"
   },
   "keywords": [],
   "author": "",
