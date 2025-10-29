@@ -1,9 +1,9 @@
 {
   "name": "2-how-node-works",
   "version": "1.0.0",
-  "main": "events.js",
+  "main": "streams.js",
   "scripts": {
-    "start": "node final/events.js"
+    "start": "node final/streams.js"
   },
   "keywords": [],
   "author": "",
