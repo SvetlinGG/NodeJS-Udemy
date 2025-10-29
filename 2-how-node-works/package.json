@@ -1,9 +1,9 @@
 {
   "name": "2-how-node-works",
   "version": "1.0.0",
-  "main": "streams.js",
+  "main": "modules.js",
   "scripts": {
-    "start": "node final/streams.js"
+    "start": "node final/modules.js"
   },
   "keywords": [],
   "author": "",
