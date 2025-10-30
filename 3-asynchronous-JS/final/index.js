@@ -37,12 +37,14 @@ const getDogPic = async () => {
     `https://dog.ceo/api/breed/${data}/images/random`
   );
   const all = await Promise.all([res1pro, res2Pro, res3Pro]);
-  console.log(all);
+  const imgs = all.map( el => el.body.message);
+  console.log(imgs);
+  
   
 
   console.log(res.body.message);
 
-  await writeFilePro('dog-img.txt', res.body.message);
+  await writeFilePro('dog-img.txt', imgs.join('\n'));
   console.log('Random dog image saved to file!');
   }catch(err){
     console.log(err);
