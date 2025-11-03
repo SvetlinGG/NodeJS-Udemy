@@ -4,15 +4,6 @@ const fs = require('fs');
 const app = express();
 app.use(express.json());
 
-// app.get('/', (req, res) => {
-//     res
-//     .status(200)
-//     .json({message: 'Hello from the server side!!!'})
-// });
-
-// app.post('/', (req, res) => {
-//     res.send('You can send post to this endpoint...')
-// })
 const tours = JSON.parse(
     fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
@@ -103,6 +94,11 @@ app
     .route('/api/v1/tours')
     .get(getAllTours)
     .post(createTour);
+
+app.use((req, res, next) => {
+    console.log('Hello from the Middleware!!');
+    next();
+});
 
 app
     .route('/api/v1/tours/:id')
