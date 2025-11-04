@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 
 const getAllUsers = (req, res) => {
     res.status(500).json({

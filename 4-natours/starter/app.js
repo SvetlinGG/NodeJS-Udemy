@@ -1,9 +1,8 @@
 const express = require('express');
-const fs = require('fs');
+
 const morgan = require('morgan');
-//const router = require('/routes/tourRoutes')
-
-
+const tourRouter = require('./routes/tourRoutes');
+const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
@@ -22,9 +21,6 @@ app.use((req, res, next) => {
     req.requestTime = new Date().toISOString();
     next();
 })
-
-
-
 
 // 3) Routes
 
