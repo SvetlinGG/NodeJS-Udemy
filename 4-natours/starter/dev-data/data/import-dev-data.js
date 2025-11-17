@@ -42,7 +42,7 @@ const deleteData = async () => {
     try {
         await Tour.deleteMany(tours);
         console.log('Data successfully deleted!');
-        process.exit();
+        
     } catch (err) {
         console.log(err);
         
