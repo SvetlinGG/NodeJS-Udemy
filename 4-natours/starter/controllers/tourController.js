@@ -13,8 +13,8 @@ exports.getAllTours = async (req,res) => {
         
 
         // Advanced filtering
-        const queryStr = JSON.stringify(queryObj)
-        queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+        let queryStr = JSON.stringify(queryObj)
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
         console.log(JSON.parse(queryStr));
         
 
@@ -22,7 +22,8 @@ exports.getAllTours = async (req,res) => {
         // {  difficulty : 'easy', duration: { gte: '5' } }
         // gte, gt, lte, lt
 
-        const query = await Tour.find(queryObj);
+        const query = await Tour.find(JSON.parse(queryStr));
+        
 
         // EXECUTE QUERY
         const tours = await query;
