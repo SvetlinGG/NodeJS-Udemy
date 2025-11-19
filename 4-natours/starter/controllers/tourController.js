@@ -27,7 +27,11 @@ exports.getAllTours = async (req,res) => {
         // 2) SORTING 
 
         if (req.query.sort){
-            query = query.sort(req.query.sort)
+            const sortBy = req.query.sort.split(',').join(' ');
+            console.log(sortBy);
+            
+            query = query.sort(sortBy)
+            // sort('price ratingsAverage)
         }
         
 
