@@ -34,6 +34,29 @@ class APIFeatures {
 
         return this;
     }
+    limitFields(){
+        if ( this.queryString.fields){
+            const fields = req.query.fields.split(',').join(' ');
+            this.query = this.query.select(fields);
+        }else {
+            this.query = this.query.select('-__v')
+        }
+        return this;
+    }
+
+    paginate(){
+        const page = req.query.page * 1 || 1;
+        const limit = req.query.limit * 1 || 100;
+        const skip = (page - 1) * limit;
+        // page=2&limit=10 , 1-10, page 1, 11-20, page 2, 21-30 page 3
+        this.query = this.query.skip(skip).limit(limit);
+
+        if ( req.query.page){
+            const numTours = await Tour.countDocuments();
+            if ( skip >= numTours) throw new Error('This page does not exist');
+        }
+        return this;
+    }
 }
 
 
@@ -65,25 +88,25 @@ exports.getAllTours = async (req,res) => {
         
         // 3) Fields limiting
 
-        if ( req.query.fields){
-            const fields = req.query.fields.split(',').join(' ');
-            query = query.select(fields);
-        }else {
-            query = query.select('-__v')
-        }
+        // if ( req.query.fields){
+        //     const fields = req.query.fields.split(',').join(' ');
+        //     query = query.select(fields);
+        // }else {
+        //     query = query.select('-__v')
+        // }
 
 
         // 4) Pagination
-        const page = req.query.page * 1 || 1;
-        const limit = req.query.limit * 1 || 100;
-        const skip = (page - 1) * limit;
-        // page=2&limit=10 , 1-10, page 1, 11-20, page 2, 21-30 page 3
-        query = query.skip(skip).limit(limit);
+        // const page = req.query.page * 1 || 1;
+        // const limit = req.query.limit * 1 || 100;
+        // const skip = (page - 1) * limit;
+        // // page=2&limit=10 , 1-10, page 1, 11-20, page 2, 21-30 page 3
+        // query = query.skip(skip).limit(limit);
 
-        if ( req.query.page){
-            const numTours = await Tour.countDocuments();
-            if ( skip >= numTours) throw new Error('This page does not exist');
-        }
+        // if ( req.query.page){
+        //     const numTours = await Tour.countDocuments();
+        //     if ( skip >= numTours) throw new Error('This page does not exist');
+        // }
 
 
         // EXECUTE QUERY
