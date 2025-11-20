@@ -12,9 +12,27 @@ class APIFeatures {
         this.queryString = queryString;
     }
     filter(){
-        const queryObj = {...req.query};
+        const queryObj = {...this.queryString};
         const excludeFields = ['page', 'sort', 'limit', 'fields'];
         excludeFields.forEach( el => delete queryObj[el]);
+
+        let queryStr = JSON.stringify(queryObj)
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+        
+        this.query.find(JSON.parse(queryStr));
+       // let query = await Tour.find(JSON.parse(queryStr));
+       return this;
+    }
+
+    sort(){
+        if (this.queryString.sort){
+            const sortBy = req.query.sort.split(',').join(' ');
+            this.query = this.query.sort(sortBy)
+        } else {
+            this.query = this.query.sort('-createdAt');
+        }
+
+        return this;
     }
 }
 
@@ -38,12 +56,12 @@ exports.getAllTours = async (req,res) => {
 
         // 2) SORTING 
 
-        if (req.query.sort){
-            const sortBy = req.query.sort.split(',').join(' ');
-            query = query.sort(sortBy)
-        }else{
-            query = query.sort('-createdAt');
-        }
+        // if (req.query.sort){
+        //     const sortBy = req.query.sort.split(',').join(' ');
+        //     query = query.sort(sortBy)
+        // }else{
+        //     query = query.sort('-createdAt');
+        // }
         
         // 3) Fields limiting
 
@@ -69,7 +87,8 @@ exports.getAllTours = async (req,res) => {
 
 
         // EXECUTE QUERY
-        const tours = await query;
+        const features = new APIFeatures(Tour.find(), req.query).filter().sort();
+        const tours = await features.query;
         // query.sort().select().skip().limit()
 
         // const query = Tour.find()
