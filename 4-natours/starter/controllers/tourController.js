@@ -7,7 +7,6 @@ exports.aliasTopTours = (req, res, next) => {
     req.query.fields = 'name,price,ratingsAverage,summary,difficulty';
     next();
 };
-
 exports.getAllTours = async (req,res) => {
 
     try {
@@ -195,6 +194,31 @@ exports.getTourStats = async (req, res) => {
             }
         })
     } catch (err) {
+        res.status(404).json({
+            status: 'fail',
+            message: err
+        })
+    }
+};
+
+exports.getTourStats = async (req, res) => {
+    try {
+        const stats = Tour.aggregate([
+            {
+                $match: { ratingsAverage: { $gte: 4.5 }}
+            },
+            {
+                $group: {
+                    _id: null,
+                    avgRating: { $avg: '$ratingsAverage' },
+                    avgPrice: { $avg: '$price' },
+                    minPrice: { $min: '$price'},
+                    maxPrice: { $max: '$price'},
+
+                }
+            }
+        ])
+    } catch (error) {
         res.status(404).json({
             status: 'fail',
             message: err
