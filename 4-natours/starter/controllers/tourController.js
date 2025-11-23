@@ -217,7 +217,14 @@ exports.getTourStats = async (req, res) => {
 
                 }
             }
-        ])
+        ]);
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                stats
+            }
+        });
     } catch (error) {
         res.status(404).json({
             status: 'fail',
