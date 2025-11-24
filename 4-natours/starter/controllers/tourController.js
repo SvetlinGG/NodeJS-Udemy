@@ -240,4 +240,15 @@ exports.getTourStats = async (req, res) => {
             message: err
         })
     }
+};
+
+exports.getMonthlyPlan = async (req, res)=> {
+    try {
+        
+    } catch (error) {
+        res.status(404).json({
+            status: 'fail',
+            message: err
+        });
+    }
 }
