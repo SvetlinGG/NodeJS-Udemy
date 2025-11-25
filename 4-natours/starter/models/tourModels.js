@@ -102,7 +102,8 @@ const tourSchema = new mongoose.Schema({
 
   // AGGREGATION MIDDLEWARE
   tourSchema.pre('aggregate', function(next){
-    console.log(this.);
+    this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+    console.log(this.pipeline());
     
 
     next();
