@@ -53,8 +53,13 @@ const tourSchema = new mongoose.Schema({
       default: Date.now(),
       select: false
     },
-    startDates: [Date]
-  }, {
+    startDates: [Date],
+    secretTour: {
+      type: Boolean,
+      default: true
+    }
+  },
+   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
   });
@@ -80,6 +85,13 @@ const tourSchema = new mongoose.Schema({
   //   console.log(doc);
   //   next();
   // })
+
+  // QUERY MIDDLEWARE
+
+  tourSchema.pre('find', function(next){
+
+    next();
+  })
   const Tour = mongoose.model('Tour', tourSchema);
 
   module.exports = Tour;
